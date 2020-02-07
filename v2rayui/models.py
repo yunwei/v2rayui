@@ -27,7 +27,8 @@ class UserTraffic(models.Model):
     """
     用户流量
     """
-    user_id = models.UUIDField(verbose_name="用户UUID", primary_key=True)
+    recore_id = models.AutoField(verbose_name="流量记录ID", primary_key=True)
+    user_id = models.UUIDField(verbose_name="用户UUID")
     year_month = models.CharField(verbose_name="年月记录", max_length=64, db_index=True)
     upload_traffic = models.BigIntegerField("上传流量", default=0)
     download_traffic = models.BigIntegerField("下载流量", default=0)
@@ -77,7 +78,8 @@ class NodeTraffic(models.Model):
     """
     节点流量
     """
-    node_id = models.UUIDField(verbose_name="节点UUID", primary_key=True)
+    recore_id = models.AutoField(verbose_name="流量记录ID", primary_key=True)
+    node_id = models.UUIDField(verbose_name="节点UUID")
     year_month = models.CharField(verbose_name="年月记录", max_length=64, db_index=True)
     upload_traffic = models.BigIntegerField("上传流量", default=0)
     download_traffic = models.BigIntegerField("下载流量", default=0)
