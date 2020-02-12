@@ -64,3 +64,30 @@ def get_user_traffic(user_id, users_traffic_obj):
         if traffic_obj.user_id == user_id:
             return round(((traffic_obj.upload_traffic + traffic_obj.download_traffic) / 1024 / 1024 / 1024), 2)
     return 0
+
+
+@register.filter
+def get_free_users_count(users):
+    free_users_number = 0
+    for user in users:
+        if user.is_free:
+            free_users_number += 1
+    return free_users_number
+
+
+@register.filter
+def get_charge_users_count(users):
+    charge_users_number = 0
+    for user in users:
+        if (not user.is_free) and (not user.is_superuser):
+            charge_users_number += 1
+    return charge_users_number
+
+
+@register.filter
+def get_expired_users_count(users):
+    charge_users_number = 0
+    for user in users:
+        if user.expire_at < timezone.now():
+            charge_users_number += 1
+    return charge_users_number

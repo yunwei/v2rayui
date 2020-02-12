@@ -86,7 +86,7 @@ class ServerNodeForm(forms.Form):
 
 class UserEditForm(forms.Form):
     user_id = forms.CharField(required=True,
-                              widget=forms.HiddenInput()
+                              widget=forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"})
                               )
     expire_at = forms.DateTimeField(required=False,
                                     widget=forms.DateTimeInput(attrs={"class": "form-control", "placeholder": "日期格式：2020-01-01"}))
