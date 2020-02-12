@@ -97,6 +97,7 @@ def register(request):
                                                 expire_at=invite_code.user_expired_at,
                                                 inviter_name=invite_code.username)
             invite_code.is_used = True
+            invite_code.new_username = form.cleaned_data["username"]
             invite_code.save()
             user = authenticate(username=form.cleaned_data["username"],
                                 password=form.cleaned_data["password"])

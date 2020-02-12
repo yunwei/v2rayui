@@ -44,6 +44,7 @@ class InviteCode(models.Model):
     code = models.CharField(verbose_name="邀请码", primary_key=True, unique=True, max_length=64)
     mark = models.CharField(verbose_name="邀请码备注", max_length=150)
     username = models.CharField(verbose_name="邀请人用户名", db_index=True, max_length=150)
+    new_username = models.CharField(verbose_name="新注册的用户名", max_length=150, default='')
     is_used = models.BooleanField(verbose_name="是否已使用", default=False)
     is_free = models.BooleanField(verbose_name="是否是免费账号", default=False)
     user_level = models.PositiveIntegerField(verbose_name="新用户等级", default=settings.DEFAULT_LEVEL,

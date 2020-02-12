@@ -79,6 +79,13 @@
                                                         </p>
                                                     </li>
                                                     {% if request.user.is_superuser %}
+                                                        {% if code.new_username %}
+                                                            <li class="nav-item">
+                                                                <p class="text-muted mt-3 mb-3">
+                                                                    <b class="text-sm mr-2">注册用户名: </b>{{ code.new_username }}
+                                                                </p>
+                                                            </li>
+                                                        {% endif %}
                                                         <li class="nav-item">
                                                             <p class="text-muted mt-3 mb-3">
                                                                 <b class="text-sm mr-2">免费用户: </b>
