@@ -11,6 +11,7 @@ import datetime
 import random
 import string
 import uuid
+import psutil
 
 
 def global_settings(request):
@@ -122,6 +123,29 @@ def dashboard(request):
         traffic = round(((traffic_obj.upload_traffic + traffic_obj.download_traffic) / 1024 / 1024 / 1024), 2)
     except Exception:
         traffic = 0
+    if request.user.is_superuser:
+        memory_info = psutil.virtual_memory()
+        swap_info = psutil.swap_memory()
+        disk_info = psutil.disk_usage('/')
+        server_info = {
+            'cpu': psutil.cpu_percent(),
+            'memory': {
+                'percent': round((memory_info.used / memory_info.total) * 100, 2),
+                'used': round(memory_info.used / 1024 / 1024),
+                'total': round(memory_info.total / 1024 / 1024)
+            },
+            'swap': {
+                'percent': round((swap_info.used / swap_info.total) * 100, 2),
+                'used': round(swap_info.used / 1024 / 1024),
+                'total': round(swap_info.total / 1024 / 1024)
+            },
+            'disk': {
+                'percent': round((disk_info.used / disk_info.total) * 100, 2),
+                'used': round(disk_info.used / 1024 / 1024 / 1024, 1),
+                'total': round(disk_info.total / 1024 / 1024 / 1024, 1)
+            },
+        }
+        return render(request, "dashboard.html", {"page": "dashboard", "nodes": nodes, "traffic": traffic, "server_info": server_info})
     return render(request, "dashboard.html", {"page": "dashboard", "nodes": nodes, "traffic": traffic})
 
 
